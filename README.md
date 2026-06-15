@@ -35,9 +35,9 @@ Your taste data is personal, so keep your own copy private. Clone this repo into
 git clone https://github.com/venhaus/recllmend.git my-recllmend
 cd my-recllmend
 
-# 2. Create an empty PRIVATE repo on GitHub (e.g. you/my-taste), then point origin at it
+# 2. Create an empty PRIVATE repo on GitHub (e.g. <your-username>/my-recllmend), then point origin at it
 git remote rename origin upstream          # the public blueprint stays as "upstream"
-git remote add origin git@github.com:you/my-recllmend.git
+git remote add origin git@github.com:<your-username>/my-recllmend.git   # <your-username> = your GitHub login
 git push -u origin main
 
 # 3. Create your live profile from the template
