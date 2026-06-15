@@ -34,7 +34,7 @@ cp taste-profile.template.md taste-profile.md
 git add taste-profile.md && git commit -m "Start my taste profile"
 ```
 
-Then open your coding agent in the folder. Either talk to the agent to fill in `taste-profile.md`, or drop your exports into `raw/` and tell it to ingest them. After that it's "log: ..." to record something and "recllmend ..." when you want a pick.
+Then open your coding agent in the folder. Either talk to the agent to fill in `taste-profile.md`, or drop your exports into `raw/` and tell it to ingest them. After that it's "log: ..." to record something and "recommend ..." when you want a pick.
 
 It's plain markdown the whole way down. Read it with `cat`, edit it in any editor, diff it in git, render it on GitHub.
 

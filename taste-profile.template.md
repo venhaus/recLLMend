@@ -1,6 +1,6 @@
 # Taste Profile
 
-> The model of my taste. Read this first. Keep it under ~120 lines — it's a summary that points into `log/`, not a copy of it.
+> The model of my taste. Read this first. Keep it a summary that points into `log/`, never a copy of it — if a section just restates entries, prune. (~120 lines is a soft tripwire for "you're duplicating the log," not a budget.)
 >
 > Last reconciled: never (0 entries). Resync when the log runs ~20 entries past this, or when a new entry contradicts a signal below. Reconciliation is described in `AGENTS.md`.
 

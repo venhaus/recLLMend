@@ -15,6 +15,8 @@ Just text files an agent reads and writes. Based on the Karpathy "LLM wiki" patt
 
 ## Core loop
 
+Both halves below start by reading `taste-profile.md`, and reading it means running the staleness check under "Keeping the profile honest" first — that's what makes reconciliation happen on its own, without the user asking.
+
 When the user reports something they consumed — finished or bounced off ("watched X, 8/10, the structure-as-content thing landed"; "bailed on Y three hours in, the systems never cohered"):
 
 1. Append a log entry to the correct medium shard, using the entry schema below. A bounce is a normal entry with `rating: bounced` and a `bailed` point.
@@ -34,13 +36,14 @@ When the user asks for a recommendation:
 - **Anchor every signal.** A claim in the profile should name a log entry or two as its evidence and sit at the right confidence: settled patterns in the per-medium sections, untested ones under "Open questions / hypotheses to test." A claim you can trace is a claim a resync can check.
 - **Reconciliation marker.** The profile header carries `Last reconciled: YYYY-MM-DD (N entries)`. Read it whenever you read the profile.
 
-Run a **resync** when any of these holds:
+Resync is automatic — the user should never have to ask for it. You already read `taste-profile.md` at the start of every interaction, so checking its marker is on the hot path. Make it a mandatory first step, not an option:
 
-- the log has grown ~20 entries past the last reconciliation,
-- a freshly logged entry contradicts a signal already in the profile (say so at log time and offer the resync), or
-- the user asks.
+- **Staleness check (every interaction).** Count current log entries — `grep -c '^### ' log/*.md` summed across shards — and compare to the marker's N. If the log has grown ~20 entries past it, resync *before* answering or logging.
+- **Contradiction check (at log time).** If a freshly logged entry clashes with a signal already in the profile, resync — or at minimum correct the contradicted signal — then continue, and tell the user.
 
-A resync is a deliberate heavy pass, like ingest: read every shard, rebuild the taste model from scratch, diff it against the current profile, and tell the user what moved and why — hypotheses promoted to settled, signals demoted or dropped, new patterns found. Then rewrite `taste-profile.md`, prune it back under the ~120-line cap, and update the marker. Only `taste-profile.md` changes; the log is append-only and is never rewritten during a resync.
+"resync" stays available as a command the user *can* invoke, but that's a manual override of an automatic process, not the trigger the system leans on.
+
+A resync is a deliberate heavy pass, like ingest: read every shard, rebuild the taste model from scratch, diff it against the current profile, and tell the user what moved and why — hypotheses promoted to settled, signals demoted or dropped, new patterns found. Then rewrite `taste-profile.md`, prune it back toward the soft ~120-line tripwire (the goal is no redundancy with the log, not a line count), and update the marker. Only `taste-profile.md` changes; the log is append-only and is never rewritten during a resync.
 
 ## Entry schema
 
@@ -62,7 +65,7 @@ Each log entry is one block:
 - A bounce (didn't finish) is signal, not a gap: log it with `rating: bounced` and a `bailed` point. Where someone bails — and what they push through — is the main evidence for each medium's friction tolerance.
 - Translate imported ratings to the unified 0–10 scale: 5-star sources (Goodreads, Letterboxd) ×2, preserving halves (4.5★ → 9); IMDb's 1–10 carries over as-is. Note the source scale in the ingestion summary so the conversion is auditable.
 - If a work already has an entry and the user re-rates it, edit in place and note the change in the `why`.
-- Keep `taste-profile.md` under ~120 lines. It's a summary that points into the log, not a second copy of it.
+- `taste-profile.md` is a summary that points into the log, never a second copy of it. The real limit is redundancy: if a section just restates log entries instead of generalizing across them, summarize harder. Treat ~120 lines as a soft tripwire meaning "you're probably duplicating the log — prune," not a hard budget.
 - Never invent a `why`. Ask — or, for backlog imports only, use the `(imported — no reason captured)` sentinel.
 - Sharding rule: if a shard grows past a few hundred entries, split by decade (`log/film-2020s.md`). Not needed at the start.
 - File ownership (keeps blueprint updates conflict-free): the blueprint owns `AGENTS.md` (and its `CLAUDE.md` / `GEMINI.md` symlinks), `README.md`, and `taste-profile.template.md`; the user's copy owns `taste-profile.md`, `log/`, and `raw/`. Never write personal data into a blueprint-owned file, and on a fresh copy create the live `taste-profile.md` by copying the template rather than editing the template in place.
@@ -70,8 +73,8 @@ Each log entry is one block:
 ## Commands the user may use
 
 - "log: ..." or natural report of consumption → run the core append loop.
-- "recllmend ..." → run the recommendation loop (e.g. "recllmend me something short and weird tonight").
+- "recommend ..." → run the recommendation loop (e.g. "recommend me something short and weird tonight").
 - "what's my taste in <medium>" → summarize from the profile + shard.
 - "resync" → reconcile `taste-profile.md` against the full log (see "Keeping the profile honest"). The heavy maintenance op; do it deliberately.
 - "ingest <file>" → parse a `raw/` export into log entries, using the schema. This is the heavy operation; do it deliberately. Backlog entries take the `(imported — no reason captured)` sentinel rather than an invented `why`.
-- First ingestion only: after parsing, run a brief taste interview. Surface the patterns the import actually reveals (clusters of high ratings, outliers, abandoned works) and ask a small number of pointed questions about *why* those patterns hold, then seed `taste-profile.md` from the answers. Build the profile from the user's reasoning, never from the raw ratings alone.
+- First ingestion only: after parsing, run a brief taste interview. Surface the patterns the import actually reveals (clusters of high ratings, outliers, abandoned works) and ask a small number of pointed questions about *why* those patterns hold, then seed `taste-profile.md` from the answers. Build the profile from the user's reasoning, never from the raw ratings alone. Set the reconciliation marker to today's date and the post-ingest entry count when you finish.
