@@ -6,27 +6,35 @@
 
 ## Core model
 
-<!-- The one or two sentences that capture the through-line of your taste. What do you actually respond to, across everything? -->
+<!-- The through-line(s) of your taste — what you actually respond to across everything. A short paragraph or a few bullets; there may be more than one thread, so don't force it into a single line. Keep each claim specific enough to be wrong. -->
 
 ## Per-medium signals
 
-Taste is often **medium-specific** — the same person can want formal invention in one medium and pure momentum in another. Record each medium's pattern and, crucially, its _friction tolerance_ (how much difficulty/slowness you'll push through before bailing).
+Taste is often **medium-specific** — the same person can want formal invention in one medium and pure momentum in another. For each medium, capture the structural axes that actually drive your reactions, and let them emerge from the log rather than forcing a fixed checklist.
+
+Signals worth watching for — a starter kit, not a required list; replace them with whatever your log actually shows:
+
+- **friction tolerance** — how much difficulty, slowness or grind you'll push through before bailing (bounces are the evidence)
+- **emotional register / tone** — the affective range that lands vs. leaves you cold
+- **novelty vs. comfort** — appetite for formal invention and ambiguity vs. a known, well-executed shape
+- **commitment cost** — the runtime, page count or hours-to-payoff you'll spend
+- **preoccupations** — themes, structures or devices you keep returning to
 
 ### Film & TV
 
-<!-- What lands, what bounces, how much patience you have here. -->
+<!-- What lands, what bounces, and on which axes. -->
 
 ### Games
 
-<!-- What lands, what bounces, friction tolerance. -->
+<!-- What lands, what bounces, and on which axes. -->
 
 ### Books
 
-<!-- What lands, what bounces, friction tolerance. -->
+<!-- What lands, what bounces, and on which axes. -->
 
-## Confirmed bounce-offs
+## Confirmed bounce-offs (cross-medium)
 
-<!-- Things you genuinely disliked or bounced off, with the structural reason. Low ratings and bounces are signal; absences are not. -->
+<!-- Structural things you bounce off *regardless* of medium — genuine global aversions, with the reason. Medium-specific bounces live in the per-medium section above; keep this section only for what holds everywhere, so the two don't duplicate. Low ratings and bounces are signal; absences are not. -->
 
 ## Open questions / hypotheses to test
 
