@@ -47,6 +47,21 @@ Resync is automatic — the user should never have to ask for it. You already re
 
 A resync is a deliberate heavy pass, like ingest: read every shard, rebuild the taste model from scratch, diff it against the current profile, and tell the user what moved and why — hypotheses promoted to settled, signals demoted or dropped, new patterns found. Then rewrite `taste-profile.md`, prune it back toward the soft ~120-line tripwire (the goal is no redundancy with the log, not a line count), and update the marker. Only `taste-profile.md` changes; the log is append-only and is never rewritten during a resync.
 
+## Seeding and re-ingesting
+
+**First run (empty log).** Two ways in, converging on the same thing — an honest first draft of the model:
+
+- *From an export:* ingest it (rules below), then run a short taste interview. Surface the patterns the data actually shows — clusters of high ratings, outliers, things abandoned — and ask a few pointed questions about *why* they hold. Seed `taste-profile.md` from the answers, not the raw ratings: the numbers tell you where to dig, the reasoning is what you record.
+- *From scratch:* with no export, interview directly — a handful of works they love and ones they bounced off, across the media they care about, always chasing the *why*.
+
+Either way the first profile is mostly hypotheses, not settled signal — park tentative reads under "Open questions / hypotheses to test" and let the log confirm or kill them. Set the reconciliation marker when you finish.
+
+**Re-ingesting (returning user, updated export).** Exports are cumulative, so a fresh dump mostly repeats what's already logged. Never blindly append:
+
+- Save the new export beside the old one, dated (e.g. `raw/imdb-2026-06-15.csv`); never overwrite or edit a prior export — `raw/` is immutable history.
+- Ingest only the *delta*: skip works already logged unchanged, append works that are new, and for a work whose rating changed, edit its entry in place and note the change in the `why` (the re-rate rule). Match works by title + year + medium.
+- Don't re-run the first-run interview. After a sizable delta, run a `resync` so the profile reflects the new data, and briefly ask about anything striking in what's new.
+
 ## Entry schema
 
 Each log entry is one block:
@@ -97,5 +112,4 @@ A finished entry and a bounce, filled in:
 - "recommend ..." → run the recommendation loop (e.g. "recommend me something short and weird tonight").
 - "what's my taste in <medium>" → summarize from the profile + shard.
 - "resync" → reconcile `taste-profile.md` against the full log (see "Keeping the profile honest"). The heavy maintenance op; do it deliberately.
-- "ingest <file>" → parse a `raw/` export into log entries, using the schema. This is the heavy operation; do it deliberately. Backlog entries take the `(imported — no reason captured)` sentinel rather than an invented `why`.
-- First ingestion only: after parsing, run a brief taste interview. Surface the patterns the import actually reveals (clusters of high ratings, outliers, abandoned works) and ask a small number of pointed questions about *why* those patterns hold, then seed `taste-profile.md` from the answers. Build the profile from the user's reasoning, never from the raw ratings alone. Set the reconciliation marker to today's date and the post-ingest entry count when you finish.
+- "ingest <file>" → parse a `raw/` export into log entries (see "Seeding and re-ingesting"). The heavy operation; do it deliberately. Imported backlog entries take the `(imported — no reason captured)` sentinel rather than an invented `why`.
