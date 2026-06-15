@@ -62,6 +62,8 @@ Either way the first profile is mostly hypotheses, not settled signal — park t
 - File the export into `raw/` under a clear, dated name (e.g. `raw/imdb-2026-06-15.csv`), replacing the previous one. No need to hoard superseded exports: the log is the durable record, the export is reproducible from the source any time, and git keeps old versions if you ever want them. Just never hand-edit an export — it's a faithful machine drop.
 - Don't re-run the first-run interview. After a sizable delta, run a `resync` so the profile reflects the new data, and briefly ask about anything striking in what's new.
 
+**Large exports.** A first import can be hundreds of rows, but turning them into backlog entries is mechanical — parse, translate the rating, format, append the `(imported — no reason captured)` sentinel. Reach for the most reliable tool you have: if you can run code, a short throwaway script that emits the markdown beats hand-transcribing hundreds of entries and won't silently drop or duplicate rows. If you parallelize with subagents or workers instead, split the job by shard (one medium per worker) so no two writers touch the same file. The taste interview and profile seeding come afterward as a single pass over the whole set — that synthesis isn't parallelizable. Subagent/worker support varies by agent; skip it if your harness lacks it.
+
 ## Entry schema
 
 Each log entry is one block:
