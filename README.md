@@ -10,7 +10,7 @@ A handful of files, each with one job:
 - `taste-profile.md` is the model of your taste. The agent reads it first, every time, and keeps it current. It's yours, and the upstream template never overwrites it. (On a fresh copy you create it from the template below.)
 - `taste-profile.template.md` is the blank starting version. It belongs to the upstream repo, so you can pull in improvements without them clobbering your real profile.
 - `log/` holds one append-only entry per thing you've finished (or bounced off of), split into a file per medium.
-- `raw/` is where you dump exports from IMDb, Goodreads, your Steam library and the like, left untouched for bulk imports and for going back to the source later.
+- `raw/` is where exports from IMDb, Goodreads, your Steam library and the like land when you import them. Your log is the record that matters, so `raw/` just keeps the latest export per source — the agent diffs it against your log to pull in what's new.
 - `AGENTS.md` is the schema and the rules the agent follows. It's the file doing the heavy lifting. `CLAUDE.md` and `GEMINI.md` are symlinks to it, so Claude Code, Codex and Gemini CLI all work out of the box with one set of instructions to maintain.
 
 Day to day it's a loop. You tell your coding agent of choice what you consumed and how it felt, it logs an entry and adjusts your profile, and when you want something for the evening you ask and it reasons from the notes instead of the genre.

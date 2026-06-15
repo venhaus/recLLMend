@@ -11,7 +11,7 @@ Just text files an agent reads and writes. Based on the Karpathy "LLM wiki" patt
 - `taste-profile.md` — the model of the user's taste. Small, always read first. The agent maintains this. It's the live, user-owned file; if it doesn't exist yet, this is a fresh copy of the blueprint — copy `taste-profile.template.md` to `taste-profile.md` before the first interview (see Conventions).
 - `taste-profile.template.md` — the pristine starting template, owned by the upstream blueprint. Never fill it with real data; it exists so blueprint improvements can flow down without touching the user's live profile.
 - `log/` — append-only consumption entries, sharded by medium (`log/film.md`, `log/tv.md`, `log/games.md`, `log/books.md`). One entry per work.
-- `raw/` — immutable source exports (IMDb CSV, Goodreads export, etc.). Never edit these; they exist for retracing.
+- `raw/` — exports you've imported (IMDb CSV, Goodreads export, etc.), landed here by `ingest`. The log is the source of truth, so `raw/` only needs the latest export per source; don't hand-edit them, and let new exports supersede old ones.
 
 ## Core loop
 
@@ -56,10 +56,10 @@ A resync is a deliberate heavy pass, like ingest: read every shard, rebuild the 
 
 Either way the first profile is mostly hypotheses, not settled signal — park tentative reads under "Open questions / hypotheses to test" and let the log confirm or kill them. Set the reconciliation marker when you finish.
 
-**Re-ingesting (returning user, updated export).** Exports are cumulative, so a fresh dump mostly repeats what's already logged. Never blindly append:
+**Re-ingesting (returning user, updated export).** Exports are cumulative, so a fresh dump mostly repeats what's already logged. Your baseline is the log, not the old export — diff the new export against the log, never against a previous export:
 
-- Save the new export beside the old one, dated (e.g. `raw/imdb-2026-06-15.csv`); never overwrite or edit a prior export — `raw/` is immutable history.
 - Ingest only the *delta*: skip works already logged unchanged, append works that are new, and for a work whose rating changed, edit its entry in place and note the change in the `why` (the re-rate rule). Match works by title + year + medium.
+- File the export into `raw/` under a clear, dated name (e.g. `raw/imdb-2026-06-15.csv`), replacing the previous one. No need to hoard superseded exports: the log is the durable record, the export is reproducible from the source any time, and git keeps old versions if you ever want them. Just never hand-edit an export — it's a faithful machine drop.
 - Don't re-run the first-run interview. After a sizable delta, run a `resync` so the profile reflects the new data, and briefly ask about anything striking in what's new.
 
 ## Entry schema
@@ -112,4 +112,4 @@ A finished entry and a bounce, filled in:
 - "recommend ..." → run the recommendation loop (e.g. "recommend me something short and weird tonight").
 - "what's my taste in <medium>" → summarize from the profile + shard.
 - "resync" → reconcile `taste-profile.md` against the full log (see "Keeping the profile honest"). The heavy maintenance op; do it deliberately.
-- "ingest <file>" → parse a `raw/` export into log entries (see "Seeding and re-ingesting"). The heavy operation; do it deliberately. Imported backlog entries take the `(imported — no reason captured)` sentinel rather than an invented `why`.
+- "ingest <file>" → the end-to-end import: read the export, reconcile it into the log (delta only — see "Seeding and re-ingesting"), seed or `resync` the profile from it, and file the export into `raw/` under a clear dated name. The heavy operation; do it deliberately. Imported backlog entries take the `(imported — no reason captured)` sentinel rather than an invented `why`.
