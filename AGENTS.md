@@ -58,6 +58,23 @@ Each log entry is one block:
 - **why**: The *structural* reason it landed, didn't, or made them bail — what about its form, pacing, or demands matched or clashed with the taste model. This is the whole value of the repo, so capture it as richly as the reaction warrants: often a sentence or two, but never flatten real nuance (a work can land and clash at once). The test is specificity, not length — say what the rating alone can't. Never leave it empty; if the user didn't say, ask one short question rather than guessing. The *only* exception: a bulk-imported entry (`date: backlog`) whose source carries no reasoning may use the sentinel `(imported — no reason captured)`. Never use that sentinel for a freshly reported work.
 ```
 
+A finished entry and a bounce, filled in:
+
+```
+### Example Film (2019)
+- **medium**: film
+- **rating**: 9/10
+- **date**: backlog
+- **why**: Structure was the content — the [specific formal device] made the viewer experience the theme rather than observe it. The kind of formal-invention-with-momentum that lands hardest.
+
+### Example Game (2021)
+- **medium**: game
+- **rating**: bounced
+- **date**: backlog
+- **bailed**: ~4h in
+- **why**: Strong premise, but the moment-to-moment systems never cohered into momentum and the busywork-to-payoff crossed the user's friction line — a textbook friction-tolerance bounce.
+```
+
 ## Conventions
 
 - Append, don't reorder. Newest entries go at the bottom of a shard.
@@ -65,7 +82,7 @@ Each log entry is one block:
 - A bounce (didn't finish) is signal, not a gap: log it with `rating: bounced` and a `bailed` point. Where someone bails — and what they push through — is the main evidence for each medium's friction tolerance.
 - Translate imported ratings to the unified 0–10 scale: 5-star sources (Goodreads, Letterboxd) ×2, preserving halves (4.5★ → 9); IMDb's 1–10 carries over as-is. Note the source scale in the ingestion summary so the conversion is auditable.
 - If a work already has an entry and the user re-rates it, edit in place and note the change in the `why`.
-- `taste-profile.md` is a summary that points into the log, never a second copy of it. Richness is the point — a detailed, multi-axis model is this product's whole value, so never drop a real distinction just to be brief. What you cut is *redundancy and staleness*, not nuance: prune sections that merely restate log entries or repeat each other, and claims the log no longer supports. Treat ~120 lines as a soft "time to prune redundancy / resync" tripwire, not a budget; a longer profile made entirely of distinct, anchored, falsifiable signals is fine.
+- `taste-profile.md` is a summary that points into the log, never a second copy of it. Richness is the point — a detailed, multi-axis model is this product's whole value, so never drop a real distinction just to be brief. What you cut is *redundancy and staleness*, not nuance: prune sections that merely restate log entries or repeat each other, and claims the log no longer supports. Treat ~120 lines *of model content* (the signals themselves, not the marker or section headers) as a soft "time to prune redundancy / resync" tripwire, not a budget; a longer profile made entirely of distinct, anchored, falsifiable signals is fine.
 - Never invent a `why`. Ask — or, for backlog imports only, use the `(imported — no reason captured)` sentinel.
 - Sharding rule: if a shard grows past a few hundred entries, split by decade (`log/film-2020s.md`). Not needed at the start.
 - File ownership (keeps blueprint updates conflict-free): the blueprint owns `AGENTS.md` (and its `CLAUDE.md` / `GEMINI.md` symlinks), `README.md`, and `taste-profile.template.md`; the user's copy owns `taste-profile.md`, `log/`, and `raw/`. Never write personal data into a blueprint-owned file, and on a fresh copy create the live `taste-profile.md` by copying the template rather than editing the template in place.

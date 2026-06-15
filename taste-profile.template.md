@@ -1,6 +1,6 @@
 # Taste Profile
 
-> The model of my taste. Read this first. Keep it a summary that points into `log/`, never a copy of it — if a section just restates entries, prune. (~120 lines is a soft tripwire for "you're duplicating the log," not a budget.)
+> The model of my taste. Read this first. Keep it a summary that points into `log/`, never a copy of it — if a section just restates entries, prune. (~120 lines *of model content* is a soft tripwire for "you're duplicating the log," not a budget.)
 >
 > Last reconciled: never (0 entries). Resync when the log runs ~20 entries past this, or when a new entry contradicts a signal below. Reconciliation is described in `AGENTS.md`.
 
@@ -40,21 +40,4 @@ Signals worth watching for — a starter kit, not a required list; replace them 
 
 <!-- Bets not yet confirmed. Update as the log grows. -->
 
----
-
-## Example log entry (for reference — real entries live in `log/`)
-
-### Example Film (2019)
-
-- **medium**: film
-- **rating**: 9/10
-- **date**: backlog
-- **why**: Structure was the content — the [specific formal device] made you experience the theme rather than observe it. Exactly the kind of formal-invention-with-momentum that lands hardest.
-
-### Example Game (2021)
-
-- **medium**: game
-- **rating**: bounced
-- **date**: backlog
-- **bailed**: ~4h in
-- **why**: Loved the premise but the moment-to-moment systems never cohered into momentum; the busywork-to-payoff ratio crossed my friction line. Bounces like this are what calibrate the games friction-tolerance signal.
+<!-- Entry schema and worked examples live in AGENTS.md. This file is only the model, so it stays free of example clutter. -->
