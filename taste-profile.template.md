@@ -1,6 +1,8 @@
 # Taste Profile
 
 > The model of my taste. Read this first. Keep it under ~120 lines — it's a summary that points into `log/`, not a copy of it.
+>
+> Last reconciled: never (0 entries). Resync when the log runs ~20 entries past this, or when a new entry contradicts a signal below. Reconciliation is described in `AGENTS.md`.
 
 ## Core model
 

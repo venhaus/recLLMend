@@ -11,7 +11,7 @@ A handful of files, each with one job:
 - `taste-profile.template.md` is the blank starting version. It belongs to the upstream repo, so you can pull in improvements without them clobbering your real profile.
 - `log/` holds one append-only entry per thing you've finished (or bounced off of), split into a file per medium.
 - `raw/` is where you dump exports from IMDb, Goodreads, your Steam library and the like, left untouched for bulk imports and for going back to the source later.
-- `CLAUDE.md` is the schema and the rules the agent follows. It's the file doing the heavy lifting.
+- `AGENTS.md` is the schema and the rules the agent follows. It's the file doing the heavy lifting. `CLAUDE.md` and `GEMINI.md` are symlinks to it, so Claude Code, Codex and Gemini CLI all work out of the box with one set of instructions to maintain.
 
 Day to day it's a loop. You tell your coding agent of choice what you consumed and how it felt, it logs an entry and adjusts your profile, and when you want something for the evening you ask and it reasons from the notes instead of the genre.
 
@@ -47,7 +47,7 @@ git fetch upstream
 git merge upstream/main
 ```
 
-This stays painless because of a simple split. This repo only ever touches `CLAUDE.md`, `README.md` and `taste-profile.template.md`; your copy only touches `taste-profile.md`, `log/` and `raw/`. The two never edit the same files, so merges don't conflict and your taste data never leaks back upstream.
+This stays painless because of a simple split. This repo only ever touches `AGENTS.md` (and its `CLAUDE.md` / `GEMINI.md` symlinks), `README.md` and `taste-profile.template.md`; your copy only touches `taste-profile.md`, `log/` and `raw/`. The two never edit the same files, so merges don't conflict and your taste data never leaks back upstream.
 
 ## License
 
