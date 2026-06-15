@@ -26,7 +26,7 @@ Taste is often **medium-specific** — the same person can want formal invention
 
 ## Confirmed bounce-offs
 
-<!-- Things you genuinely disliked or abandoned, with the structural reason. Low ratings are signal; absences are not. -->
+<!-- Things you genuinely disliked or bounced off, with the structural reason. Low ratings and bounces are signal; absences are not. -->
 
 ## Open questions / hypotheses to test
 
@@ -42,3 +42,11 @@ Taste is often **medium-specific** — the same person can want formal invention
 - **rating**: 9/10
 - **date**: backlog
 - **why**: Structure was the content — the [specific formal device] made you experience the theme rather than observe it. Exactly the kind of formal-invention-with-momentum that lands hardest.
+
+### Example Game (2021)
+
+- **medium**: game
+- **rating**: bounced
+- **date**: backlog
+- **bailed**: ~4h in
+- **why**: Loved the premise but the moment-to-moment systems never cohered into momentum; the busywork-to-payoff ratio crossed my friction line. Bounces like this are what calibrate the games friction-tolerance signal.

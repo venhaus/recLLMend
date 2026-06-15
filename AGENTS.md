@@ -15,10 +15,10 @@ Just text files an agent reads and writes. Based on the Karpathy "LLM wiki" patt
 
 ## Core loop
 
-When the user reports something they consumed ("watched X, 8/10, the structure-as-content thing landed"):
+When the user reports something they consumed — finished or bounced off ("watched X, 8/10, the structure-as-content thing landed"; "bailed on Y three hours in, the systems never cohered"):
 
-1. Append a log entry to the correct medium shard, using the entry schema below.
-2. If the reaction reveals or shifts a taste signal, update `taste-profile.md` accordingly. Note material updates briefly; don't rewrite the whole profile for one data point.
+1. Append a log entry to the correct medium shard, using the entry schema below. A bounce is a normal entry with `rating: bounced` and a `bailed` point.
+2. If the reaction reveals or shifts a taste signal, update `taste-profile.md` accordingly. Note material updates briefly; don't rewrite the whole profile for one data point. Bounces are high-value here: they calibrate the medium's friction tolerance and often belong under "Confirmed bounce-offs."
 3. Tell the user what you logged and any profile change, then continue the conversation.
 
 When the user asks for a recommendation:
@@ -49,15 +49,17 @@ Each log entry is one block:
 ```
 ### <Title> (<Year>)
 - **medium**: film | tv | game | book
-- **rating**: <n>/10   (unified 0–10 scale across every medium; see the rating-translation rule under Conventions for imports)
+- **rating**: <n>/10   — or `bounced` if the user didn't finish it (unified 0–10 scale; see the rating-translation rule under Conventions for imports)
 - **date**: YYYY-MM-DD   (date logged, or "backlog" for bulk-imported history)
-- **why**: One or two sentences on the *structural* reason it landed or didn't — what about its form, pacing, or demands matched or clashed with the taste model. This field is the whole value of the repo. Never leave it empty; if the user didn't say, ask one short question rather than guessing. The *only* exception: a bulk-imported entry (`date: backlog`) whose source carries no reasoning may use the sentinel `(imported — no reason captured)`. Never use that sentinel for a freshly reported work.
+- **bailed**: where they quit — "20 min", "ep3", "~p.80", "act 2". Bounce entries only; omit it for anything finished. Where someone bails is the friction-tolerance signal, so capture it.
+- **why**: One or two sentences on the *structural* reason it landed, didn't, or made them bail — what about its form, pacing, or demands matched or clashed with the taste model. This field is the whole value of the repo. Never leave it empty; if the user didn't say, ask one short question rather than guessing. The *only* exception: a bulk-imported entry (`date: backlog`) whose source carries no reasoning may use the sentinel `(imported — no reason captured)`. Never use that sentinel for a freshly reported work.
 ```
 
 ## Conventions
 
 - Append, don't reorder. Newest entries go at the bottom of a shard.
 - Ratings are directional, not precise. This domain tolerates fuzziness; don't agonize over a point.
+- A bounce (didn't finish) is signal, not a gap: log it with `rating: bounced` and a `bailed` point. Where someone bails — and what they push through — is the main evidence for each medium's friction tolerance.
 - Translate imported ratings to the unified 0–10 scale: 5-star sources (Goodreads, Letterboxd) ×2, preserving halves (4.5★ → 9); IMDb's 1–10 carries over as-is. Note the source scale in the ingestion summary so the conversion is auditable.
 - If a work already has an entry and the user re-rates it, edit in place and note the change in the `why`.
 - Keep `taste-profile.md` under ~120 lines. It's a summary that points into the log, not a second copy of it.
