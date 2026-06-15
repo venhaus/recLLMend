@@ -1,37 +1,32 @@
 # recLLMend
 
-A small media tracker that's nothing but markdown files and a coding agent (I use Claude Code) reading and writing them. No app, no database. If the agent vanished tomorrow I'd still have a tidy, greppable, git-tracked record of everything I've watched, played and read, with notes on why each one worked for me or didn't.
-
+A small media tracker that's nothing but markdown files and a coding agent reading and writing them. A tidy, git-tracked record of everything you've watched, played and read, with notes on why each one worked for you or not.
 It's Andrej Karpathy's "LLM wiki" idea, pointed at media instead of notes.
-
-## Why I built it
-
-The big recommendation services are good at "people who liked X also liked Y" and not much else. They don't know that I loved a film mostly for how it was put together, or that I'll happily grind through a slow, fiddly game but bail on a slow book by page 30. So this repo keeps the *why*, and the agent reasons over that rather than genre tags. What I actually care about is the model of my taste; the list of titles is just where it gets stored.
 
 ## How it works
 
 A handful of files, each with one job:
 
-- `taste-profile.md` is the model of my taste. The agent reads it first, every time, and keeps it current. It's mine, and the upstream template never overwrites it. (On a fresh copy you create it from the template below.)
-- `taste-profile.template.md` is the blank starting version. It belongs to the upstream repo, so I can pull in improvements without them clobbering my real profile.
-- `log/` holds one append-only entry per thing I've finished, split into a file per medium.
-- `raw/` is where I dump exports from IMDb, Goodreads and the like, left untouched for bulk imports and for going back to the source later.
+- `taste-profile.md` is the model of your taste. The agent reads it first, every time, and keeps it current. It's yours, and the upstream template never overwrites it. (On a fresh copy you create it from the template below.)
+- `taste-profile.template.md` is the blank starting version. It belongs to the upstream repo, so you can pull in improvements without them clobbering your real profile.
+- `log/` holds one append-only entry per thing you've finished (or bounced off of), split into a file per medium.
+- `raw/` is where you dump exports from IMDb, Goodreads, your Steam library and the like, left untouched for bulk imports and for going back to the source later.
 - `CLAUDE.md` is the schema and the rules the agent follows. It's the file doing the heavy lifting.
 
-Day to day it's a loop. I tell the agent what I watched and how it felt, it logs an entry and adjusts my profile, and when I want something for the evening I ask and it reasons from the notes instead of the genre.
+Day to day it's a loop. You tell your coding agent of choice what you consumed and how it felt, it logs an entry and adjusts your profile, and when you want something for the evening you ask and it reasons from the notes instead of the genre.
 
 ## Setup
 
-Your taste data is personal, so keep your own copy private. A fork won't do here, since forks of a public repo stay public. Instead, clone this into a fresh private repo that still shares history with it, which is what lets you pull future changes cleanly:
+Your taste data is personal, so keep your own copy private. Clone this repo into a fresh private repo that still shares history with it, which is what lets you pull future changes cleanly:
 
 ```sh
 # 1. Clone the blueprint
-git clone https://github.com/venhaus/recllmend.git my-taste
-cd my-taste
+git clone https://github.com/venhaus/recllmend.git my-recllmend
+cd my-recllmend
 
 # 2. Create an empty PRIVATE repo on GitHub (e.g. you/my-taste), then point origin at it
 git remote rename origin upstream          # the public blueprint stays as "upstream"
-git remote add origin git@github.com:you/my-taste.git
+git remote add origin git@github.com:you/my-recllmend.git
 git push -u origin main
 
 # 3. Create your live profile from the template
@@ -39,9 +34,9 @@ cp taste-profile.template.md taste-profile.md
 git add taste-profile.md && git commit -m "Start my taste profile"
 ```
 
-Then open Claude Code in the folder. Either talk to the agent to fill in `taste-profile.md`, or drop your exports into `raw/` and tell it to ingest them. After that it's "log: ..." to record something and "recllmend ..." when you want a pick.
+Then open your coding agent in the folder. Either talk to the agent to fill in `taste-profile.md`, or drop your exports into `raw/` and tell it to ingest them. After that it's "log: ..." to record something and "recllmend ..." when you want a pick.
 
-It's plain markdown the whole way down. Read it with cat, edit it in any editor, diff it in git, render it on GitHub.
+It's plain markdown the whole way down. Read it with `cat`, edit it in any editor, diff it in git, render it on GitHub.
 
 ## Keeping your copy up to date
 
