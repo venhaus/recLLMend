@@ -15,6 +15,17 @@ A handful of files, each with one job:
 
 Day to day it's a loop. You tell your coding agent of choice what you consumed and how it felt, it logs an entry and adjusts your profile, and when you want something for the evening you ask and it reasons from the notes instead of the genre.
 
+## What you can say
+
+You're talking to an agent, not a CLI, so phrasing is loose — but these are the things it's set up to do:
+
+- **`log: ...`** — record something you finished, and how it felt: *"log: finished Disco Elysium, 9/10, the writing carried systems I'd normally bounce off."* It files the entry and updates your profile.
+- **Bounced off something?** Say so — *"bailed on Elden Ring after ~6 hours, the open-world drift lost me."* A did-not-finish is logged as its own thing, and where you quit is often a stronger signal than any rating.
+- **`recommend ...`** — ask for a pick: *"recommend me something short and weird for tonight."* It reasons from your profile rather than genre, and (if it can browse) will surface recent or off-the-beaten-path options and check they're real before suggesting them.
+- **`what's my taste in <medium>`** — a read-back of your profile for film, TV, games or books.
+- **`ingest <file>`** — bulk-import an export (IMDb, Goodreads, Steam, …): it reads the file, pulls everything new into your log, refreshes your profile, and tidies the export into `raw/`. Works the same for your first import and for an updated export months later.
+- **`resync`** — force a full rebuild of your profile from the log. You rarely need it; the agent reconciles on its own as the log grows. It's here for when you want it explicitly.
+
 ## Setup
 
 Your taste data is personal, so keep your own copy private. Clone this repo into a fresh private repo that still shares history with it, which is what lets you pull future changes cleanly:
@@ -34,20 +45,9 @@ cp taste-profile.template.md taste-profile.md
 git add taste-profile.md && git commit -m "Start my taste profile"
 ```
 
-Then open your coding agent in the folder. Either talk to the agent to fill in `taste-profile.md`, or drop your exports into `raw/` and tell it to ingest them. From there you just talk to it — see what you can say below.
+Then open your coding agent in the folder. Either talk to the agent to fill in `taste-profile.md`, or drop your exports into `raw/` and tell it to ingest them. From there you just talk to it, using the commands above.
 
 It's plain markdown the whole way down. Read it with `cat`, edit it in any editor, diff it in git, render it on GitHub.
-
-## What you can say
-
-You're talking to an agent, not a CLI, so phrasing is loose — but these are the things it's set up to do:
-
-- **`log: ...`** — record something you finished, and how it felt: *"log: finished Disco Elysium, 9/10, the writing carried systems I'd normally bounce off."* It files the entry and updates your profile.
-- **Bounced off something?** Say so — *"bailed on Elden Ring after ~6 hours, the open-world drift lost me."* A did-not-finish is logged as its own thing, and where you quit is often a stronger signal than any rating.
-- **`recommend ...`** — ask for a pick: *"recommend me something short and weird for tonight."* It reasons from your profile rather than genre, and (if it can browse) will surface recent or off-the-beaten-path options and check they're real before suggesting them.
-- **`what's my taste in <medium>`** — a read-back of your profile for film, TV, games or books.
-- **`ingest <file>`** — bulk-import an export (IMDb, Goodreads, Steam, …): it reads the file, pulls everything new into your log, refreshes your profile, and tidies the export into `raw/`. Works the same for your first import and for an updated export months later.
-- **`resync`** — force a full rebuild of your profile from the log. You rarely need it; the agent reconciles on its own as the log grows. It's here for when you want it explicitly.
 
 ## Keeping your copy up to date
 
