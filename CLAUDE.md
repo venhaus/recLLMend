@@ -30,18 +30,19 @@ Each log entry is one block:
 ```
 ### <Title> (<Year>)
 - **medium**: film | tv | game | book
-- **rating**: <n>/10   (or n/5 if that's the user's scale for this medium — keep it consistent within a shard)
+- **rating**: <n>/10   (unified 0–10 scale across every medium; see the rating-translation rule under Conventions for imports)
 - **date**: YYYY-MM-DD   (date logged, or "backlog" for bulk-imported history)
-- **why**: One or two sentences on the *structural* reason it landed or didn't — what about its form, pacing, or demands matched or clashed with the taste model. This field is the whole value of the repo. Never leave it empty; if the user didn't say, ask one short question rather than guessing.
+- **why**: One or two sentences on the *structural* reason it landed or didn't — what about its form, pacing, or demands matched or clashed with the taste model. This field is the whole value of the repo. Never leave it empty; if the user didn't say, ask one short question rather than guessing. The *only* exception: a bulk-imported entry (`date: backlog`) whose source carries no reasoning may use the sentinel `(imported — no reason captured)`. Never use that sentinel for a freshly reported work.
 ```
 
 ## Conventions
 
 - Append, don't reorder. Newest entries go at the bottom of a shard.
 - Ratings are directional, not precise. This domain tolerates fuzziness; don't agonize over a point.
+- Translate imported ratings to the unified 0–10 scale: 5-star sources (Goodreads, Letterboxd) ×2, preserving halves (4.5★ → 9); IMDb's 1–10 carries over as-is. Note the source scale in the ingestion summary so the conversion is auditable.
 - If a work already has an entry and the user re-rates it, edit in place and note the change in the `why`.
 - Keep `taste-profile.md` under ~120 lines. It's a summary that points into the log, not a second copy of it.
-- Never invent a `why`. Ask.
+- Never invent a `why`. Ask — or, for backlog imports only, use the `(imported — no reason captured)` sentinel.
 - Sharding rule: if a shard grows past a few hundred entries, split by decade (`log/film-2020s.md`). Not needed at the start.
 
 ## Commands the user may use
@@ -49,4 +50,5 @@ Each log entry is one block:
 - "log: ..." or natural report of consumption → run the core append loop.
 - "recllmend ..." → run the recommendation loop (e.g. "recllmend me something short and weird tonight").
 - "what's my taste in <medium>" → summarize from the profile + shard.
-- "ingest <file>" → parse a `raw/` export into log entries, using the schema. This is the heavy operation; do it deliberately.
+- "ingest <file>" → parse a `raw/` export into log entries, using the schema. This is the heavy operation; do it deliberately. Backlog entries take the `(imported — no reason captured)` sentinel rather than an invented `why`.
+- First ingestion only: after parsing, run a brief taste interview. Surface the patterns the import actually reveals (clusters of high ratings, outliers, abandoned works) and ask a small number of pointed questions about *why* those patterns hold, then seed `taste-profile.md` from the answers. Build the profile from the user's reasoning, never from the raw ratings alone.
