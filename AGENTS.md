@@ -27,7 +27,8 @@ When the user asks for a recommendation:
 
 1. Read `taste-profile.md` (always) plus the relevant medium shard(s). Do NOT read the entire log if only one medium is in scope.
 2. Reason from the _why_ fields and the medium-specific model, not surface genre. The point of this tool over Letterboxd-style services is reasoning about structural fit across whatever signals actually drive this person — friction tolerance is the classic example, but tone, novelty appetite, and commitment cost matter just as much.
-3. Give a small number of high-confidence picks with the reason each should land. Flag the bet level honestly.
+3. If you can browse the web, use it to get past the limits of your training data: surface recent releases and genuinely off-the-beaten-path candidates the user probably hasn't hit, and *verify* that anything non-obvious actually exists and has the attributes you're leaning on (year, form, premise) before putting it forward. Search expands and fact-checks the candidate set; it does not import popularity — the fit reasoning stays grounded in the taste model, or you've just rebuilt Letterboxd. If you can't browse, lean on what you're confident about and flag that picks may be dated or unverified.
+4. Give a small number of high-confidence picks with the reason each should land. Flag the bet level honestly. Never invent a title or its details — a smaller list you can vouch for beats a confident hallucination.
 
 ## Keeping the profile honest
 
@@ -84,6 +85,7 @@ A finished entry and a bounce, filled in:
 - If a work already has an entry and the user re-rates it, edit in place and note the change in the `why`.
 - `taste-profile.md` is a summary that points into the log, never a second copy of it. Richness is the point — a detailed, multi-axis model is this product's whole value, so never drop a real distinction just to be brief. What you cut is *redundancy and staleness*, not nuance: prune sections that merely restate log entries or repeat each other, and claims the log no longer supports. Treat ~120 lines *of model content* (the signals themselves, not the marker or section headers) as a soft "time to prune redundancy / resync" tripwire, not a budget; a longer profile made entirely of distinct, anchored, falsifiable signals is fine.
 - Never invent a `why`. Ask — or, for backlog imports only, use the `(imported — no reason captured)` sentinel.
+- Never recommend a work you can't vouch for. Verify off-canon or recent picks — that they exist and match what you're claiming — or flag them as unverified. A hallucinated recommendation is the one unrecoverable error here: it teaches the user the tool can't be trusted.
 - Sharding rule: if a shard grows past a few hundred entries, split by decade (`log/film-2020s.md`). Not needed at the start.
 - File ownership (keeps blueprint updates conflict-free): the blueprint owns `AGENTS.md` (and its `CLAUDE.md` / `GEMINI.md` symlinks), `README.md`, and `taste-profile.template.md`; the user's copy owns `taste-profile.md`, `log/`, and `raw/`. Never write personal data into a blueprint-owned file, and on a fresh copy create the live `taste-profile.md` by copying the template rather than editing the template in place.
 
