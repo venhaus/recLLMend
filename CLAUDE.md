@@ -5,7 +5,8 @@ Just text files an agent reads and writes. Based on the Karpathy "LLM wiki" patt
 
 ## What this repo is
 
-- `taste-profile.md` — the model of the user's taste. Small, always read first. The agent maintains this.
+- `taste-profile.md` — the model of the user's taste. Small, always read first. The agent maintains this. It's the live, user-owned file; if it doesn't exist yet, this is a fresh copy of the blueprint — copy `taste-profile.template.md` to `taste-profile.md` before the first interview (see Conventions).
+- `taste-profile.template.md` — the pristine starting template, owned by the upstream blueprint. Never fill it with real data; it exists so blueprint improvements can flow down without touching the user's live profile.
 - `log/` — append-only consumption entries, sharded by medium (`log/film.md`, `log/tv.md`, `log/games.md`, `log/books.md`). One entry per work.
 - `raw/` — immutable source exports (IMDb CSV, Goodreads export, etc.). Never edit these; they exist for retracing.
 
@@ -44,6 +45,7 @@ Each log entry is one block:
 - Keep `taste-profile.md` under ~120 lines. It's a summary that points into the log, not a second copy of it.
 - Never invent a `why`. Ask — or, for backlog imports only, use the `(imported — no reason captured)` sentinel.
 - Sharding rule: if a shard grows past a few hundred entries, split by decade (`log/film-2020s.md`). Not needed at the start.
+- File ownership (keeps blueprint updates conflict-free): blueprint owns `CLAUDE.md`, `README.md`, and `taste-profile.template.md`; the user's copy owns `taste-profile.md`, `log/`, and `raw/`. Never write personal data into a blueprint-owned file, and on a fresh copy create the live `taste-profile.md` by copying the template rather than editing the template in place.
 
 ## Commands the user may use
 
