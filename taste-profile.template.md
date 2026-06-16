@@ -1,12 +1,12 @@
 # Taste Profile
 
-> The model of my taste. Read this first. Keep it a summary that points into `log/`, never a copy of it — if a section just restates entries, prune. (~120 lines *of model content* is a soft tripwire for "you're duplicating the log," not a budget.)
+> The model of my taste. Read this first. Keep it a summary that points into `log/`, never a copy of it — if a section just restates entries, prune. (~120 lines _of model content_ is a soft tripwire for "you're duplicating the log," not a budget.)
 >
 > Last reconciled: never (0 entries). Resync when the log runs ~20 entries past this, or when a new entry contradicts a signal below. Reconciliation is described in `AGENTS.md`.
 
 ## Core model
 
-<!-- The through-line(s) of your taste — what you actually respond to across everything. A short paragraph or a few bullets; there may be more than one thread, so don't force it into a single line. Keep each claim specific enough to be wrong. -->
+<!-- The through-line(s) of your taste — what you actually respond to across everything. A short paragraph or a few bullets; there may be more than one thread, so don't force it into a single line. Keep each claim specific enough to be wrong. Beyond what you like and dislike, it's worth noting what you're *currently after* — the mood or kind of thing you're seeking next (the "expect" facet) — since that steers recommendations as much as settled taste. -->
 
 ## Per-medium signals
 
